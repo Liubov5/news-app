@@ -12,7 +12,6 @@ const PostItem = (props) => {
             </div>
             <div className="post_btn">
                 <MyButton onClick = {()=>navigate(`/posts/${props.post.title}`,  { state:{post:props.post}} )}>Открыть</MyButton>
-                <MyButton onClick = {()=>props.remove(props.post)}>Удалить</MyButton>
             </div>
         </div>
     );

@@ -17,12 +17,14 @@ export default class PostService {
         
     // }
 
-    static async getAll(limit=10, page=0){
+    static async getAll(limit=10, page=0, searchQuery="health"){
+        console.log(searchQuery);
+        
         try{
             const response = await axios.get("https://newsapi.org/v2/everything",{
                 params: {
                     apiKey:"fed57cd500344f019528159bd1e65282",
-                    q: "barbie",
+                    q: searchQuery,
                     searchIn: "title",
                     language:"en",
                     pageSize:limit,
