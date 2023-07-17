@@ -26,20 +26,21 @@ function Posts() {
   const [totalPages, setTotalPages] = useState(0);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
-  const lastElement = useRef();
+  //const lastElement = useRef();
 
   const [fetchPosts, isPostsLoading, postError] = useFetching(async (limit, page)=>{
       const response = await PostService.getAll(limit, page);
-      setPosts([...posts, ...response.data]); //добавляем в конец массива новые посты
-      const totalCount = response.headers['x-total-count'];
+      //setPosts([...posts, ...response.data.articles]); //добавляем в конец массива новые посты. Это работало для бесконечной прокрутки
+      setPosts(response.data.articles);
+      const totalCount = response.data.totalResults;
       setTotalPages(getPageCount(totalCount, limit));
   }); //передаем колбэк аргументом т.к. он ждет его в самой функци
 
   const SortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query);
 
-  useObserver(lastElement, page < totalPages, isPostsLoading, () => {
-    setPage(page + 1);
-  } );
+  // useObserver(lastElement, page < totalPages, isPostsLoading, () => {
+  //   setPage(page + 1);
+  // } );
 
   useEffect(()=>{
     fetchPosts(limit, page);
@@ -79,13 +80,16 @@ function Posts() {
       {postError &&
         <h1>Ошибка получения данных</h1>
       }
-       <PostList remove={removePost} posts={SortedAndSearchedPosts} title="Список текстов"/>
-       <div ref={lastElement} style={{height: "20px", background: "gray"}}></div>
-      {isPostsLoading &&    
-        <div style={{display: 'flex', justifyContent: 'center', marginTop: '50px'}}><Loader/></div>
-      }
-      
       <Pagination totalPages={totalPages} changePage={changePage} page={page}/>
+
+       <PostList remove={removePost} posts={SortedAndSearchedPosts} title="Список текстов"/>
+
+       {/* <div ref={lastElement} style={{height: "20px", background: "gray"}}></div> */}
+        {isPostsLoading &&    
+          <div style={{display: 'flex', justifyContent: 'center', marginTop: '50px'}}><Loader/></div>
+        }
+      
+      
       <MyModal visible={modal} setVisible={setModal}> 
           <PostForm create = {createPost}/>
       </MyModal>
