@@ -27,13 +27,14 @@ function Posts() {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState("health");
+  const [totalCount, setTotalCount] = useState(0);
   //const lastElement = useRef();
 
   const [fetchPosts, isPostsLoading, postError] = useFetching(async (limit, page, query)=>{
       const response = await PostService.getAll(limit, page, query);
       //setPosts([...posts, ...response.data.articles]); //добавляем в конец массива новые посты. Это работало для бесконечной прокрутки
       setPosts(response.data.articles);
-      const totalCount = response.data.totalResults;
+      setTotalCount(response.data.totalResults);
       setTotalPages(getPageCount(totalCount, limit));
   }); //передаем колбэк аргументом т.к. он ждет его в самой функци
 
@@ -85,12 +86,11 @@ function Posts() {
       } */}
       <Pagination totalPages={totalPages} changePage={changePage} page={page}/>
 
-       <PostList posts={SortedAndSearchedPosts} title="Список текстов"/>
+      <PostList  posts={SortedAndSearchedPosts} title="Список новостей" totalCount={totalCount}/>
 
-       {/* <div ref={lastElement} style={{height: "20px", background: "gray"}}></div> */}
-        {isPostsLoading &&    
-          <div style={{display: 'flex', justifyContent: 'center', marginTop: '50px'}}><Loader/></div>
-        }
+      {isPostsLoading &&    
+        <div style={{display: 'flex', justifyContent: 'center', marginTop: '50px'}}><Loader/></div>
+      }
       
       
       <MyModal visible={modal} setVisible={setModal}> 
