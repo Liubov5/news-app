@@ -26,7 +26,7 @@ function Posts() {
   const [totalPages, setTotalPages] = useState(0);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
-  const [query, setQuery] = useState("health");
+  const [query, setQuery] = useState("");
   const [totalCount, setTotalCount] = useState(0);
   //const lastElement = useRef();
 
@@ -43,6 +43,15 @@ function Posts() {
   // useObserver(lastElement, page < totalPages, isPostsLoading, () => {
   //   setPage(page + 1);
   // } );
+
+
+  useEffect(()=>{
+      if(window.localStorage.hasOwnProperty("search_query")){
+          const q = window.localStorage.getItem("search_query")
+          setQuery(q);
+          console.log(query);
+      }
+  }, [query])
 
   useEffect(()=>{
     fetchPosts(limit, page, query);
@@ -86,7 +95,7 @@ function Posts() {
       } */}
       <Pagination totalPages={totalPages} changePage={changePage} page={page}/>
 
-      <PostList  posts={SortedAndSearchedPosts} title="Список новостей" totalCount={totalCount}/>
+      <PostList  posts={SortedAndSearchedPosts} title="Список новостей" totalCount={totalCount} query={query}/>
 
       {isPostsLoading &&    
         <div style={{display: 'flex', justifyContent: 'center', marginTop: '50px'}}><Loader/></div>

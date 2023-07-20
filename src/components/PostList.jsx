@@ -4,7 +4,7 @@ import {
     CSSTransition,
     TransitionGroup,
   } from 'react-transition-group';
-const PostList =({posts, title, totalCount})=> {
+const PostList =({posts, title, totalCount, query})=> {
     if(!posts.length){
         return (
             <h1 style={{textAlign: 'center'}}>Посты не найдены</h1>
@@ -13,7 +13,7 @@ const PostList =({posts, title, totalCount})=> {
     return (
         <div>
             <h1 style={ {textAlign: 'center'} }>{title}</h1>
-            <h5>Количество новостей по теме: {totalCount}</h5>
+            <h5>Количество новостей по теме <span style={{color: 'green', fontSize:"24px"}}>{query}</span>: {totalCount}</h5>
             <TransitionGroup>
             {
             posts.map((post,index) =>

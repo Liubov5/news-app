@@ -18,8 +18,7 @@ export default class PostService {
     // }
 
     static async getAll(limit=10, page=0, searchQuery="health"){
-        console.log(searchQuery);
-        
+      
         try{
             const response = await axios.get("https://newsapi.org/v2/everything",{
                 params: {
@@ -33,7 +32,7 @@ export default class PostService {
             });
             return response;
         }catch(e){
-            console.log(e)
+            console.log("Ошибка какая-то бля ", e)
         }
     }
 

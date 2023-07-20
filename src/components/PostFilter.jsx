@@ -20,7 +20,10 @@ const PostFilter = ({query, setQuery}) => {
             onChange={(e)=>setCurrentQuery(e.target.value)}
 
             />
-            <MyButton onClick = {()=>setQuery(currentQuery)}>Найти</MyButton>
+            <MyButton onClick = {()=>{
+                setQuery(currentQuery);
+                window.localStorage.setItem("search_query", currentQuery);
+                }}>Найти</MyButton>
 
             {/* <MySelect 
             value={filter.sort}
