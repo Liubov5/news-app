@@ -1,2 +1,2 @@
-[![Watch the video](https://img.youtube.com/vi/T-3OQ7lSoby-w/maxresdefault.jpg)](https://youtu.be/T-3OQ7lSoby-w)
+[![Watch the video](https://img.youtube.com/vi/3OQ7lSoby-w/maxresdefault.jpg)](https://youtu.be/3OQ7lSoby-w)
 <img src="1.png"/>
